@@ -1,6 +1,6 @@
-# 2nd Plenary (IN3230/IN4230) - RAW sockets
+# RAW sockets
 
-In this session, we're going to implement a sender and receiver applications
+In this example, we will implement a sender and receiver applications
 that use RAW sockets to communicate to each other in a chat session.
 
 `topo_p2p.py` is the python script that generates the mininet topology.
@@ -17,4 +17,3 @@ that use RAW sockets to communicate to each other in a chat session.
 
   Practise and implement new features in the applications.
 
-  All the best! :-)

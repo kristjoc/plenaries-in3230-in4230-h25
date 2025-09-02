@@ -1,9 +1,9 @@
-# 2nd Plenary (IN3230/IN4230) - UNIX sockets
+# UNIX sockets
 
-During this session, we're going to implement a client/server application that
-talk to each other through UNIX sockets. In the Home Exams, UNIX sockets will
-function as an interface between the MIP daemon and upper layers, such as ping
-applications.
+In this example, we will implement a client/server application that
+communicates through UNIX sockets. In the Oblig and Home Exams, UNIX
+sockets will serve as the interface between the MIP daemon and higher
+layers, such as the ping applications.
 
 ## Usage
 
@@ -12,4 +12,3 @@ applications.
 - Follow the on-screen instructions.
 - Practise and implement new features.
 
-All the best! :-)

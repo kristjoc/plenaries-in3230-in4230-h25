@@ -52,6 +52,9 @@ example, we explored all the steps involved in the ping-pong process,
 including the application request via the UNIX interface, the MIP-ARP
 request and reply, as well as the subsequent ping and pong packets.
 
+For more details about MIP, please refer to its
+[specifications](https://www.uio.no/studier/emner/matnat/ifi/IN3230/h25/obligatorisk-oppgave/ispec-mip-2025.txt).
+
 ## UNIX and RAW Sockets
 
 In the last ten minutes of the session, we provided a very brief
