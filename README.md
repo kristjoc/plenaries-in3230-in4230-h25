@@ -13,7 +13,8 @@ live-coded and discussed.
 ## Sessions ##
 
   1. Plenary Session 1: [p1_01-09-2025](p1_01-09-2025/)
-  2. 
+  2. Plenary Session 2: [p2_08-09-2025](p2_08-09-2025/)
+  3. 
 
 ## Info ##
 
