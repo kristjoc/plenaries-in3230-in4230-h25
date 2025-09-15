@@ -7,9 +7,11 @@ sending packets with multiple headers using RAW sockets.
 	- serializing the `struct pdu` into a byte array
 
 
-Check the code
-[here](https://github.com/kristjoc/plenaries-in3230-in4230-h25/src/branch/main/p3_15-09-2025)
-and feel free to adapt it for the Oblig and Home Exams.  
+Check the code for the
+[first](https://github.com/kristjoc/plenaries-in3230-in4230-h25/tree/main/p3_15-09-2025/ping-pong)
+and
+[second](https://github.com/kristjoc/plenaries-in3230-in4230-h25/tree/main/p3_15-09-2025/hip)
+methods, and feel free to adapt them for the Oblig and Home Exams.  
 
 
 **NOTE:** The examples we code during plenaries are intentionally
