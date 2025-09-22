@@ -12,10 +12,10 @@
 struct pdu * alloc_pdu(void)
 {
 	struct pdu *pdu = (struct pdu *)malloc(sizeof(struct pdu));
-	
+
 	pdu->ethhdr = (struct eth_hdr *)malloc(sizeof(struct eth_hdr));
 	pdu->ethhdr->ethertype = htons(0xFFFF);
-	
+
 	pdu->hiphdr = (struct hip_hdr *)malloc(sizeof(struct hip_hdr));
         pdu->hiphdr->dst = HIP_DST_ADDR;
         pdu->hiphdr->src = HIP_DST_ADDR ;
@@ -35,11 +35,11 @@ void fill_pdu(struct pdu *pdu,
 	      uint8_t pkt_type)
 {
 	size_t slen = 0;
-	
+
 	memcpy(pdu->ethhdr->dst_mac, dst_mac_addr, 6);
 	memcpy(pdu->ethhdr->src_mac, src_mac_addr, 6);
 	pdu->ethhdr->ethertype = htons(ETH_P_HIP);
-	
+
         pdu->hiphdr->dst = dst_hip_addr;
         pdu->hiphdr->src = src_hip_addr;
         pdu->hiphdr->version = HIP_VERSION;
