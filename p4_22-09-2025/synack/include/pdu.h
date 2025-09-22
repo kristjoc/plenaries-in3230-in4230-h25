@@ -13,7 +13,7 @@
 struct pdu {
 	struct eth_hdr *ethhdr;
 	struct hip_hdr *hiphdr;
-	uint8_t        *sdu;
+	uint8_t	       *sdu;
 } __attribute__((packed));
 
 struct pdu * alloc_pdu(void);
@@ -23,7 +23,7 @@ void fill_pdu(struct pdu *,
 	      uint8_t,
 	      uint8_t,
 	      const char *,
-              uint8_t);
+	      uint8_t);
 size_t hip_serialize_pdu(struct pdu *, uint8_t *);
 size_t hip_deserialize_pdu(struct pdu *, uint8_t *);
 void print_pdu_content(struct pdu *);

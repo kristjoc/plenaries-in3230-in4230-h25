@@ -22,5 +22,4 @@ struct hip_hdr {
 	uint8_t type : 4;
 } __attribute__((packed));
 
-
 #endif /* _HIP_H_ */

@@ -1,6 +1,6 @@
 #include <stdlib.h>		/* free */
-#include <stdio.h> 		/* printf */
-#include <unistd.h>             /* fgets */
+#include <stdio.h>		/* printf */
+#include <unistd.h>		/* fgets */
 #include <string.h>		/* memset */
 #include <fcntl.h>
 #include <linux/if_packet.h>	/* AF_PACKET */

@@ -17,11 +17,11 @@ struct pdu * alloc_pdu(void)
 	pdu->ethhdr->ethertype = htons(0xFFFF);
 
 	pdu->hiphdr = (struct hip_hdr *)malloc(sizeof(struct hip_hdr));
-        pdu->hiphdr->dst = HIP_DST_ADDR;
-        pdu->hiphdr->src = HIP_DST_ADDR ;
-        pdu->hiphdr->len = (1u<<8) - 1;
-        pdu->hiphdr->version = HIP_VERSION;
-        pdu->hiphdr->type = HIP_TYPE_DATA;
+	pdu->hiphdr->dst = HIP_DST_ADDR;
+	pdu->hiphdr->src = HIP_DST_ADDR ;
+	pdu->hiphdr->len = (1u<<8) - 1;
+	pdu->hiphdr->version = HIP_VERSION;
+	pdu->hiphdr->type = HIP_TYPE_DATA;
 
 	return pdu;
 }
@@ -40,9 +40,9 @@ void fill_pdu(struct pdu *pdu,
 	memcpy(pdu->ethhdr->src_mac, src_mac_addr, 6);
 	pdu->ethhdr->ethertype = htons(ETH_P_HIP);
 
-        pdu->hiphdr->dst = dst_hip_addr;
-        pdu->hiphdr->src = src_hip_addr;
-        pdu->hiphdr->version = HIP_VERSION;
+	pdu->hiphdr->dst = dst_hip_addr;
+	pdu->hiphdr->src = src_hip_addr;
+	pdu->hiphdr->version = HIP_VERSION;
 
 	if (!pkt_type)
 		pdu->hiphdr->type = HIP_TYPE_SYN;
@@ -58,7 +58,7 @@ void fill_pdu(struct pdu *pdu,
 		slen = slen + (4 - (slen % 4));
 
 	/* to get the real SDU length in bytes, the len value is multiplied by 4 */
-        pdu->hiphdr->len = slen / 4;
+	pdu->hiphdr->len = slen / 4;
 
 	pdu->sdu = (uint8_t *)calloc(1, slen);
 	memcpy(pdu->sdu, sdu, slen);
