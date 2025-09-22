@@ -1,0 +1,66 @@
+#+title: IN3230/IN4230 Oblig Grading Guidelines
+
+* Design document
+
+** MIP vs. IPv4
+
+** MIP-ARP protocol
+
+** Flow chart
+
+
+* General implementation quality
+
+** Code structure
+
+The implementation code must be nominally readable and structured.
+
+** Constructive comments
+
+Code comments should be concise, to the point and useful ("why am I doing this"
+rather than "here is what obviously happens").
+
+Functions should be adequately documented as specified in the assignment text.
+
+
+* MIP daemon
+
+** Handling data from client and server using various send/recv functions
+
+Students must implement the UNIX socket interface between the MIP daemon and
+upper layers.
+
+** MIP-ARP implementation with ARP cache
+
+Students must implement the MIP-ARP protocol and send ARP Requests/Reply in
+order to discover the MAC address of the requested MIP daemon. The results must
+be stored in a MIP-ARP cache.
+
+** Constructing and checking header
+
+Students must respect the MIP specifications. The MIP daemon must be able to
+populate the MIP header fields properly and also check the header fields.
+
+** Use of MIP-ARP cache
+
+The Ping messages after the first one should be able to use the MIP-ARP cache
+instead of sending a MIP-ARP Request again.
+
+* Ping applications
+
+** Ping server
+
+Ping server is able to receive text messages via Unix socket from the local MIP
+daemon. It should print this text and send back a ping message with content
+``PONG:<received message>''.
+
+** Ping client
+
+The ping client is able to send a message via UNIX socket to the local MIP
+daemon. The message contains user-specified content and is addressed to some
+user-specified MIP address. Ping messages are built up in the following manner:
+"PING:<user-specified message>".
+
+After receiving a response, the ping client prints the time between sending the
+message and obtaining the response. If no response arrives within 1 second, the
+ping client should print ``timeout'' and exit.
