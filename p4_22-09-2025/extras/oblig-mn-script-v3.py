@@ -14,7 +14,7 @@ import time
 # Usage example:
 #
 # 1. First, run the following command to start mininet with this script:
-# sudo mn --mac --custom oblig-mn-script.py --topo oblig --link tc
+# sudo mn --mac --custom oblig-mn-script-v3.py --topo oblig --link tc
 #
 # 2. Second, inside the mininet console run 'init_oblig'
 #
@@ -102,14 +102,14 @@ def init_oblig(self, line):
                           title="Client [A]",
                           geometry="80x20+0+300",
                           cmd="./ping_client usockA \"Hello IN3230\" 20"))
-    time.sleep(1)
+    time.sleep(3)
 
     terms.append(openTerm(self,
                           node=C,
                           title="Client [C]",
                           geometry="80x20+0+600",
                           cmd="./ping_client usockC \"Hello IN4230\" 20"))
-    time.sleep(1)
+    time.sleep(3)
 
     # This MUST output 'ping timeout' since A is not able to reach C.
     terms.append(openTerm(self,
@@ -117,7 +117,7 @@ def init_oblig(self, line):
                           title="Client [A]",
                           geometry="80x20+0+300",
                           cmd="./ping_client usockA \"Hello IN4230\" 30"))
-    time.sleep(1)
+    time.sleep(3)
 
     # This time the RTT should be smaller, ~20ms, since MIP-ARP cache
     # is being utilized.
@@ -150,5 +150,5 @@ CLI.do_EOF = do_EOF
 
 # Topologies
 topos = {
-    'oblig': (lambda: ObligTopo()),
+    'oblig': (lambda: Oblig()),
 }
