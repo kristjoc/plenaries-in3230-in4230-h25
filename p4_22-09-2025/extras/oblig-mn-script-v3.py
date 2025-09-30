@@ -69,21 +69,21 @@ def init_oblig(self, line):
                           node=A,
                           title="Host A",
                           geometry="80x20+0+0",
-                          cmd="./mip_daemon -d usockA 10"))
+                          cmd="./mipd -d usockA 10"))
     time.sleep(1)
 
     terms.append(openTerm(self,
                           node=B,
                           title="Host B",
                           geometry="80x20+550+0",
-                          cmd="./mip_daemon -d usockB 20"))
+                          cmd="./mipd -d usockB 20"))
     time.sleep(1)
 
     terms.append(openTerm(self,
                           node=C,
                           title="Host C",
                           geometry="80x20+1100+0",
-                          cmd="./mip_daemon -d usockC 30"))
+                          cmd="./mipd -d usockC 30"))
     time.sleep(1)
 
     # Run ping_server on Host B
