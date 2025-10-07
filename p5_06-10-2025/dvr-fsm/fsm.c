@@ -343,27 +343,31 @@ int main(void) {
 				/* Receive message */
 				int rc = recvmsg(raw_sock, &msg, 0);
 				if (rc > 0) {
+					/* Skip packets that aren't for us or aren't HELLOs */
+					if (frame_hdr.eth_proto[0] == 0xFF &&
+					    frame_hdr.eth_proto[1] == 0xFF &&
+					    strcmp((char*)buffer, "HELLO") == 0) {
+						/* Process HELLO message */
+						printf("Received HELLO from ");
+						print_mac_addr(frame_hdr.src_addr, 6);
+						printf("\n");
 
-					/* Process HELLO message */
-					printf("Received HELLO from ");
-					print_mac_addr(frame_hdr.src_addr, 6);
-					printf("\n");
+						/* Update neighbor information */
+						int idx = find_or_add_neighbor(neighbors,
+									       &num_neighbors,
+									       frame_hdr.src_addr);
+						if (idx >= 0) {
+							neighbors[idx].last_hello_time = time(NULL);
+							neighbors[idx].missed_hellos = 0;
 
-					/* Update neighbor information */
-					int idx = find_or_add_neighbor(neighbors,
-								       &num_neighbors,
-								       frame_hdr.src_addr);
-					if (idx >= 0) {
-						neighbors[idx].last_hello_time = time(NULL);
-						neighbors[idx].missed_hellos = 0;
-
-						/* If neighbor was disconnected,
-                                                 * mark as connected */
-						if (neighbors[idx].state == DISCONNECTED) {
-							neighbors[idx].state = CONNECTED;
-							printf("Neighbor ");
-							print_mac_addr(neighbors[idx].mac_addr, 6);
-							printf(" is now CONNECTED\n");
+							/* If neighbor was disconnected,
+							 * mark as connected */
+							if (neighbors[idx].state == DISCONNECTED) {
+								neighbors[idx].state = CONNECTED;
+								printf("Neighbor ");
+								print_mac_addr(neighbors[idx].mac_addr, 6);
+								printf(" is now CONNECTED\n");
+							}
 						}
 					}
 				}
