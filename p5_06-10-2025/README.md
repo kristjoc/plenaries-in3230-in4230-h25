@@ -72,14 +72,19 @@ table, printing state changes and information about seen neighbors.
 
 ### Testing Under Network Impairments
 
-You may use Mininet's link parameters to introduce delay and loss. For
-example, to simulate a 33% packet loss and 2s delay on a link (RTT
-~4s):
+You may use Mininet's link commands or parameters to take interfaces of a link down/bring them up or introduce delay and loss.
 
 ```bash
 # In Mininet CLI:
-link A B loss 33 delay 2000ms
+link A B down
 ```
+
+To simulate a 33% packet loss and 2s delay on a link, change the following line in the Mininet script.
+
+```bash
+self.addLink(A, B, bw=10, delay='2000ms', loss=33.0, use_tbf=False)
+```
+
 This will help you observe how the protocol detects dead neighbors
 when "HELLO" packets cannot make it.
 
