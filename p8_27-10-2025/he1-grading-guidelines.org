@@ -1,0 +1,212 @@
+#+title: IN4230 Home Exam 1 Grading Report - Draft Version
+#+subtitle: Student ID
+
+
+* Design document (10 points)
+
+** Flow chart (3 points)
+
+The flow chart should summarize the flow of execution of the updated MIP daemon
+as well as the routing daemon.
+
+** A concise description of the routing protocol, its behavior and message formats. (3 points)
+
+** Describe the "Count-to-Infinity" problem in DVR protocols. How do you handle this problem in your own implementation? (2 points)
+
+** What is the limitation of Split Horizon? How does Poison reverse solve this issue? (2 points)
+
+
+* General implementation quality (5 points)
+
+** Code structure (3 points)
+
+The implementation code must be nominally readable and structured.
+
+Keep in mind that these students generally have very little experience writing
+large programs in general, and even less experience with C in particular. We
+should not be too strict here.
+
+** Constructive comments (2 points)
+
+Code comments should be concise, to the point and useful ("why am I doing this"
+rather than "here is what obviously happens").
+
+Functions should be adequately documented as specified in the assignment text;
+don't be too harsh on this point.
+
+
+* MIP daemon extensions (10 points)
+
+** Updated upper interface respected (5 points)
+
+The protocol for communicating with upper layers is amended as follows:
+
+Whenever there is an SDU to be passed either up or down, this is sent as a
+message over the UNIX socket. The message format consists of: 1) An 8 bit MIP
+address, which is either the sender or destination address when passing up/down,
+respectively. 2) An 8 bit TTL value specifying the time to live of the message.
+A value of 0 (zero) indicates that the MIP daemon should use a default value. 3)
+The rest of the message contains the payload (SDU).
+
+** Upper layer identification protocol (5 points)
+
+The MIP daemon listens on the UNIX socket, upper layer entities connect to it.
+Upon initially connecting, the upper layer entity identifies itself with a
+single message containing the SDU type identifier it handles (8 bits, but recall
+that values are restricted to the range [0,7]).
+
+
+* MIP daemon forwarding engine (25 points)
+
+** Pass SDU up (5 points)
+
+The forwarding engine simply checks the TTL and destination address of incoming
+MIP datagrams and decides how to handle them:
+
+1) If the destination address is that of the local host, pass the SDU to the
+appropriate higher layer entity based on the SDU type. No further processing.
+
+** TTL logic (5 points)
+
+When the destination address is not local, the forwarding routine continues: The
+TTL value is decremented by one. Should the new value be zero, the datagram must
+be discarded without further processing. If the routing daemon is able to return
+a route to the destination host from its routing table, forward the PDU to the
+returned next hop. The updated TTL value must be set in the PDU header.
+
+** Route lookup (5 points)
+
+The MIP daemon should send REQUEST message to the routing daemon for routing
+queries. The routing daemon must answer queries strictly in the order they are
+received with a RESPONSE message.
+
+** Non blocking (5 points)
+
+The forwarding engine must not block the execution flow in the MIP daemon while
+waiting for route lookup responses. This entails that it must, for example, be
+possible to send an outgoing MIP broadcast datagram at the same time as the
+routing lookup is in progress.
+
+** No deadlock (5 points)
+
+In this assignment, it is possible to use blocking socket calls when dealing
+with this interface socket as long as one takes care to use a mechanism such as
+epoll to avoid deadlocking between sending and reading calls. Alternatively, one
+may use non-blocking sockets.
+
+
+* Routing (30 points)
+
+** Lower interface (to MIP daemon) (3 points)
+
+The routing daemon connects to the MIP daemon using a UNIX socket interface. The
+UNIX domain socket must use the SOCK_SEQPACKET socket type. This provides
+connection-oriented datagram semantics over the socket.
+
+** Uses (at least) specified message types (3 points)
+
+The student must at least the following message types:
+
+- A HELLO message for discovering neighboring nodes.
+- An UPDATE message to advertise the routes in your routing table.
+- A REQUEST message for intra-host route lookups. This message is fully
+  specified in the next section.
+- A RESPONSE message for intra-host route responses. This message is fully
+  specified in the next section.
+
+** Protocol is DVR-based (5 points)
+
+The student must implement the Distance Vector Routing (DVR) scheme, with
+Poisoned Reverse loop protection.
+
+** Neighbor discovery (5 points)
+
+The routing daemon should broadcast HELLO messages for discovering neighboring
+nodes.
+
+** Exchange distance vectors with neighbor (5 points)
+
+The routing daemon should send UPDATE message to its neighbors to advertise the
+routes in its routing table.
+
+** Routing table update (5 points)
+
+The routing daemon should update its routing table when neighbours advertise
+routes with lower costs or poisoned routes.
+
+** Route lookup interface respected (2 points)
+
+The message format of the REQUEST and RESPONSE messages, used for routing
+queries and answering them, is respected.
+
+** Route lookup correctly implemented (2 points)
+
+The routing daemon responds to the routing queries with the MIP address of the
+next hop, or address 255 to indicate a lookup failure.
+
+
+* Ping applications (3 points)
+
+** Conforms to extended interface applications (3 points)
+
+
+* Overall goals (17 points)
+
+** Routing converges with stable topology (7 points)
+
+** Routing discovers shortest path (7 points)
+
+** Multi-hop communications works correctly (3 points)
+
+
+* Summary
+
+| Candidate ID                                |      |
+|---------------------------------------------+------|
+| *Design document*                           | *10* |
+|---------------------------------------------+------|
+| Flow chart                                  |    3 |
+| Protocol description                        |    3 |
+| Q1: Count-to-Infinity                       |    2 |
+| Q2: Split Horizon                           |    2 |
+|---------------------------------------------+------|
+| *General implementation quality*            |  *5* |
+|---------------------------------------------+------|
+| Code structure                              |    3 |
+| Constructive comments                       |    2 |
+|---------------------------------------------+------|
+| *MIP daemon extensions*                     | *10* |
+|---------------------------------------------+------|
+| Updated upper interface respected           |    5 |
+| Upper layer identification protocol         |    5 |
+|---------------------------------------------+------|
+| *MIP daemon forwarding engine*              | *25* |
+|---------------------------------------------+------|
+| Pass SDU up                                 |    5 |
+| TTL logic                                   |    5 |
+| Route lookup                                |    5 |
+| Non blocking                                |    5 |
+| No deadlock                                 |    5 |
+|---------------------------------------------+------|
+| *Routing*                                   | *30* |
+|---------------------------------------------+------|
+| Lower interface (to MIP daemon)             |    3 |
+| Uses (at least) specified message types     |    3 |
+| Protocol is DVR-based                       |    5 |
+| Neighbor discovery                          |    5 |
+| Exchange distance vectors with neighbor     |    5 |
+| Routing table update                        |    5 |
+| Route lookup interface respected            |    2 |
+| Route lookup correctly implemented          |    2 |
+|---------------------------------------------+------|
+| *Ping applications*                         |  *3* |
+|---------------------------------------------+------|
+| Conforms to extended interface applications |    3 |
+|---------------------------------------------+------|
+| *Overall goals*                             | *17* |
+|---------------------------------------------+------|
+| Routing converges with stable topology      |    7 |
+| Routing discovers shortest path             |    7 |
+| Multi-hop communications works correctly    |    3 |
+|---------------------------------------------+------|
+| Total score                                 |      |

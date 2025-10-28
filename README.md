@@ -19,6 +19,8 @@ live-coded and discussed.
   5. Plenary Session 5: [p5_06-10-2025](p5_06-10-2025/)
   6. Plenary Session 6: [p6_13-10-2025](p6_13-10-2025/)
   7. Plenary Session 7: 
+  8. Plenary Session 8: [p8_27-10-2025](p8_27-10-2025/)
+  9. Plenary Session 9: 
 
 ## Info ##
 
