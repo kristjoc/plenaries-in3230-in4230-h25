@@ -12,7 +12,7 @@ main functions a host needs to call to:
 Enough talk - let's get our hands on the C code!  
 
 Check the code
-[here](https://github.com/kristjoc/plenaries-in3230-in4230-h25/src/branch/main/p2_08-09-2025/greet-your-neighbor)
+[here](https://github.com/kristjoc/plenaries-in3230-in4230-h25/tree/main/p2_08-09-2025/greet-your-neighbor)
 and feel free to adapt it for the Oblig and Home Exams.  
 
 Instead of using `struct msghdr` to send data via a RAW socket, an
